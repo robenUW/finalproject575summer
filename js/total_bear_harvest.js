@@ -18,7 +18,7 @@
     //create a scale to size bars proportionally to frame and for axis
     var yScale = d3.scaleLinear()
         .range([463, 0])
-        .domain([-1, 8000]);
+        .domain([-500, 8000]);
 
 
     //begin script when window loads
