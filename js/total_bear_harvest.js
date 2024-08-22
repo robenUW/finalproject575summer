@@ -6,10 +6,10 @@
 
     //chart frame dimensions
     var chartWidth = (window.innerWidth * .95) ,
-        chartHeight = 500,
+        chartHeight = 400,
         leftPadding = 34,
         rightPadding = 2,
-        topBottomPadding = 4,
+        topBottomPadding = 6,
         chartInnerWidth = chartWidth - leftPadding - rightPadding,
         chartInnerHeight = chartHeight - topBottomPadding * 2,
         translate = "translate(" + leftPadding + "," + topBottomPadding + ")";
