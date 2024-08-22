@@ -44,7 +44,7 @@ function createPropSymbols(data){
 //function to retrieve the data and place it on the map
 function getData(){
     //load the data
-    fetch("data/WMU_NY_WGS84_deer.json")
+    fetch("data/wmuNY8222024.json")
         .then(function(response){
             return response.json();
         })
