@@ -46,7 +46,7 @@
             .center([0, 43]) // Centered on the latitude of New York
             .rotate([76, 0]) // Rotated to the longitude of New York; note the sign inversion
             .parallels([41, 44]) // Roughly the latitudinal extent of New York State
-            .scale(6000) // Adjust scale as needed for your visualization
+            .scale(4000) // Adjust scale as needed for your visualization
             .translate([width / 2, height / 2]);
 
         var path = d3.geoPath()
