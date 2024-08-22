@@ -1,0 +1,198 @@
+/*Add CSS styles here*/
+.svg-container {
+    position: relative;
+}
+
+.axis path,
+
+.usa {
+    fill: #cfc7c7;
+    stroke: #605a5a;
+    stroke-width: 2px;
+}
+
+.ca {
+    fill: #d0c4c4;
+    stroke: #605a5a;
+    stroke-width: 2px;
+}
+
+.gratLines {
+    fill: none;
+    stroke: #999;
+    stroke-width: 1px;
+}
+
+.gratBackground {
+    fill: #8cc1d2;
+}
+
+.map {
+    border: medium solid #999;
+    margin: 1px 0 0 20px;
+    background-color: #c1e1f0;
+    position: absolute;
+}
+
+.regions {
+    stroke: #000;
+    stroke-width: 0.5px;
+    stroke-linecap: round;
+}
+
+.numbers {
+    fill: white;
+    font-family: sans-serif;
+    
+}
+
+.chart {
+    float: right;
+    margin: 8px 0px 0 0;
+}
+
+.chartTitle {
+    font-family: sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.chartBackground {
+    fill: rgba(128,128,128,.2);
+}
+
+.chartFrame {
+    fill: none;
+    stroke: #999;
+    stroke-width: px;
+    shape-rendering: crispEdges;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #999;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 1.0em;
+    fill: #999;
+}
+
+
+.dropdown {
+    position: absolute;
+    top: 60px;
+    left: 25.5px;
+    z-index: 10;
+    font-family: sans-serif;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 2px;
+    border: 1px solid #999;
+    box-shadow: 2px 2px 4px #999;
+}
+
+option {
+    font-weight: normal;
+}
+
+
+.box{
+    position: static;
+    top:10px; 
+    left: 500px;
+}
+
+.infolabel {
+    position: absolute;
+    height: 50px;
+    min-width: 100px;
+    color: #fff;
+    background-color: #000;
+    border: solid thin #fff;
+    padding: 5px 10px;
+}
+
+.infolabel h1 {
+    margin: 0 20px 0 0;
+    padding: 0;
+    display: inline-block;
+    line-height: 1em;
+}
+
+.button {
+    background-color: #94968b; /* Green */
+    border: none;
+    color: rgb(93, 77, 77);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    position: center;
+  }
+
+  #map {    
+    height: 1000px;    
+    width: 100%;
+
+    border: 1px solid gray;
+}
+
+html, body{
+    margin: 0;
+    padding: 0;
+ }
+
+ /*Styling related to sidepanel plugin*/
+.header h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .header a {
+    font-size: 16px;
+    color: #969fa1;
+    text-decoration: none;
+    margin-left: 24px;
+  }
+  
+  .header a:hover {
+    color: #135f79;
+    text-decoration: underline;
+  }
+  
+  .header a span {
+    margin-left: 10px;
+  }
+  
+  .header a svg {
+    vertical-align: middle;
+  }
+  
+  .sidepanel-content {
+    font-size: 1rem;
+  }
+  
+  .sidepanel-content h4 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  .sidepanel-content a {
+    text-decoration: none;
+    font-size: 1rem;
+    color: #007399;
+    transition: color 0.3s ease-in;
+  }
+  
+  .sidepanel-content a:hover {
+    color: #135f79;
+    text-decoration: underline;
+  }
+  
