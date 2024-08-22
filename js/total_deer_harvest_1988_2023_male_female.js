@@ -1,15 +1,16 @@
 //First line of main.js...wrap everything in a self-executing anonymous function to move to local scope
 (function(){
 
-    var attrArray = ["year1970","year1971","year1972","year1973","year1974","year1975","year1976","year1977","year1978","year1979","year1980","year1981","year1982","year1983","year1984","year1985","year1986","year1987","year1988","year1989","year1990","year1991","year1992","year1993","year1994","year1995","year1996","year1997","year1998","year1999","year2000","year2001","year2002","year2003","year2004","year2005","year2006","year2007","year2008","year2009","year2010","year2011","year2012","year2013","year2014","year2015","year2016","year2017","year2018","year2019","year2020","year2021","year2022","year2023","TotalAllTime"]
+    var attrArray = ["Total Adult Male","Total Fawn Male","Total Adult Female","Total Fawn Female"]
     var expressed = attrArray[0]; //initial attribute
+
 
     //chart frame dimensions
     var chartWidth = (window.innerWidth * .95) ,
-        chartHeight = 500,
-        leftPadding = 33,
+        chartHeight = 475,
+        leftPadding = 45,
         rightPadding = 2,
-        topBottomPadding = 4,
+        topBottomPadding = 6,
         chartInnerWidth = chartWidth - leftPadding - rightPadding,
         chartInnerHeight = chartHeight - topBottomPadding * 2,
         translate = "translate(" + leftPadding + "," + topBottomPadding + ")";
@@ -18,7 +19,7 @@
     //create a scale to size bars proportionally to frame and for axis
     var yScale = d3.scaleLinear()
         .range([463, 0])
-        .domain([-1, 200]);
+        .domain([20000, 135000]);
 
 
     //begin script when window loads
@@ -28,7 +29,7 @@
     function setMap(){
         //map frame dimensions
         var width = window.innerWidth * .95,
-            height = window.innerHeight * .49;
+            height = window.innerHeight * .50;
     
         //create container div for the map and chart
         var container = d3.select("body")
@@ -55,7 +56,7 @@
 
         //use Promise.all to parallelize asynchronous data loading
         var promises = [];    
-            promises.push(d3.csv("data/bear_take_dec.csv")); //load attributes from csv    
+            promises.push(d3.csv("data/deer_totals_1988_2023.csv")); //load attributes from csv    
             promises.push(d3.json("data/WMU_NY_WGS84.topojson")); //load chlropleth spatial data 
             promises.push(d3.json("data/US_State_Boundaries.topojson")); //load background data
             promises.push(d3.json("data/Canada.topojson")); //load background data
@@ -192,33 +193,42 @@
 
     }
 
-    function makeColorScale(data){
-        var colorClasses = [
-            "#EADDCA",
-            "#E1C16E",
-            "#B87333",
-            "#814141",
-            "#8B0000"];
-        //create color scale generator
-        var colorScale = d3.scaleQuantile()
-            .range(colorClasses);
+ //function to create color scale generator
+function makeColorScale(data){
+    var colorClasses = [
+        "#EADDCA",
+        "#E1C16E",
+        "#B87333",
+        "#814141",
+        "#8B0000"];
 
-        //build two-value array of minimum and maximum expressed attribute values
-        var minmax = [
-            d3.min(data, function(d) { return parseFloat(d[expressed]); }),
-            d3.max(data, function(d) { return parseFloat(d[expressed]); })
-        ];
+    //create color scale generator
+    var colorScale = d3.scaleThreshold()
+        .range(colorClasses);
 
-        //assign two-value array as scale domain
-        colorScale.domain(minmax);
-
-        console.log(minmax)
-        
-        return colorScale;
+    //build array of all values of the expressed attribute
+    var domainArray = [];
+    for (var i=0; i<data.length; i++){
+        var val = parseFloat(data[i][expressed]);
+        domainArray.push(val);
     };
 
-    //function to create a dropdown menu for attribute selection
-    function createDropdown(csvData){
+    //cluster data using ckmeans clustering algorithm to create natural breaks
+    var clusters = ss.ckmeans(domainArray, 5);
+    //reset domain array to cluster minimums
+    domainArray = clusters.map(function(d){
+        return d3.min(d);
+    });
+    //remove first value from domain array to create class breakpoints
+    domainArray.shift();
+
+    //assign array of last 4 cluster minimums as domain
+    colorScale.domain(domainArray);
+
+    return colorScale;
+};
+     //function to create a dropdown menu for attribute selection
+     function createDropdown(csvData){
         //add select element
         var dropdown = d3.select("body")
             .append("select")
@@ -241,6 +251,14 @@
             .attr("value", function(d){ return d })
             .text(function(d){ return d });
     };
+
+
+
+
+
+
+
+
 
     //dropdown change event handler
     function changeAttribute(attribute, csvData) {
@@ -387,7 +405,7 @@
     
         //at the bottom of updateChart()...add text to chart title
         var chartTitle = d3.select(".chartTitle")
-            .text("Black Bear Harvests: " + expressed);
+            .text("Total White Tailed Deer Harvests: " + expressed);
     }; //end of updateChart
 
     //function to highlight enumeration units and bars

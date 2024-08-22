@@ -1,13 +1,13 @@
 //First line of main.js...wrap everything in a self-executing anonymous function to move to local scope
 (function(){
 
-    var attrArray = ["year1970","year1971","year1972","year1973","year1974","year1975","year1976","year1977","year1978","year1979","year1980","year1981","year1982","year1983","year1984","year1985","year1986","year1987","year1988","year1989","year1990","year1991","year1992","year1993","year1994","year1995","year1996","year1997","year1998","year1999","year2000","year2001","year2002","year2003","year2004","year2005","year2006","year2007","year2008","year2009","year2010","year2011","year2012","year2013","year2014","year2015","year2016","year2017","year2018","year2019","year2020","year2021","year2022","year2023","TotalAllTime"]
+    var attrArray = ["TotalAllTime"]
     var expressed = attrArray[0]; //initial attribute
 
     //chart frame dimensions
     var chartWidth = (window.innerWidth * .95) ,
         chartHeight = 500,
-        leftPadding = 33,
+        leftPadding = 34,
         rightPadding = 2,
         topBottomPadding = 4,
         chartInnerWidth = chartWidth - leftPadding - rightPadding,
@@ -18,7 +18,7 @@
     //create a scale to size bars proportionally to frame and for axis
     var yScale = d3.scaleLinear()
         .range([463, 0])
-        .domain([-1, 200]);
+        .domain([-1, 8000]);
 
 
     //begin script when window loads
@@ -55,7 +55,7 @@
 
         //use Promise.all to parallelize asynchronous data loading
         var promises = [];    
-            promises.push(d3.csv("data/bear_take_dec.csv")); //load attributes from csv    
+            promises.push(d3.csv("data/Bear_total.csv")); //load attributes from csv    
             promises.push(d3.json("data/WMU_NY_WGS84.topojson")); //load chlropleth spatial data 
             promises.push(d3.json("data/US_State_Boundaries.topojson")); //load background data
             promises.push(d3.json("data/Canada.topojson")); //load background data
@@ -387,7 +387,7 @@
     
         //at the bottom of updateChart()...add text to chart title
         var chartTitle = d3.select(".chartTitle")
-            .text("Black Bear Harvests: " + expressed);
+            .text("Total Bear Harvests:" + expressed);
     }; //end of updateChart
 
     //function to highlight enumeration units and bars

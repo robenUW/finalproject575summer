@@ -1,13 +1,13 @@
 //First line of main.js...wrap everything in a self-executing anonymous function to move to local scope
 (function(){
 
-    var attrArray = ["year1970","year1971","year1972","year1973","year1974","year1975","year1976","year1977","year1978","year1979","year1980","year1981","year1982","year1983","year1984","year1985","year1986","year1987","year1988","year1989","year1990","year1991","year1992","year1993","year1994","year1995","year1996","year1997","year1998","year1999","year2000","year2001","year2002","year2003","year2004","year2005","year2006","year2007","year2008","year2009","year2010","year2011","year2012","year2013","year2014","year2015","year2016","year2017","year2018","year2019","year2020","year2021","year2022","year2023","TotalAllTime"]
+    var attrArray = ["Bow 2007","Early 2007","Muzzleloader 2007","Rifle 2007","2007 Total","Bow 2008","Early 2008","Muzzleloader 2008","Rifle 2008","2008 Total","Bow 2009","Early 2009","Muzzleloader 2009","Rifle 2009","Unknown 2009","2009 Total","Bow 2010","Early 2010","Muzzleloader 2010","Rifle 2010","2010 Total","Bow 2011","Early 2011","Muzzleloader 2011","Rifle 2011","2011 Total","Bow 2012","Early 2012","Muzzleloader 2012","Rifle 2012","2012 Total","Bow 2013","Early 2013","Muzzleloader 2013","Rifle 2013","2013 Total","Bow 2014","Early 2014","Muzzleloader 2014","Rifle 2014","2014 Total","Bow 2015","Early 2015","Muzzleloader 2015","Rifle 2015","2015 Total","Bow 2016","Early 2016","Muzzleloader 2016","Rifle 2016","Unknown 2016","2016 Total","Bow 2017","Early 2017","Muzzleloader 2017","Rifle 2017","Unknown 2017","2017 Total","Bow 2018","Early 2018","Muzzleloader 2018","Rifle 2018","Unknown 2018","2018 Total","Bow 2019","Early 2019","Muzzleloader 2019","Rifle 2019","Unknown 2019","2019 Total","Bow 2020","Early 2020","Muzzleloader 2020","Rifle 2020","Unknown 2020","2020 Total","Bow 2021","Early 2021","Muzzleloader 2021","Rifle 2021","Unknown 2021","2021 Total","Bow 2022","Early 2022","Muzzleloader 2022","Rifle 2022","Unknown 2022","Grand Total"]
     var expressed = attrArray[0]; //initial attribute
 
     //chart frame dimensions
     var chartWidth = (window.innerWidth * .95) ,
         chartHeight = 500,
-        leftPadding = 33,
+        leftPadding = 34,
         rightPadding = 2,
         topBottomPadding = 4,
         chartInnerWidth = chartWidth - leftPadding - rightPadding,
@@ -18,7 +18,7 @@
     //create a scale to size bars proportionally to frame and for axis
     var yScale = d3.scaleLinear()
         .range([463, 0])
-        .domain([-1, 200]);
+        .domain([0, 35]);
 
 
     //begin script when window loads
@@ -55,8 +55,8 @@
 
         //use Promise.all to parallelize asynchronous data loading
         var promises = [];    
-            promises.push(d3.csv("data/bear_take_dec.csv")); //load attributes from csv    
-            promises.push(d3.json("data/WMU_NY_WGS84.topojson")); //load chlropleth spatial data 
+            promises.push(d3.csv("data/Town_bear_harvesttype2007_2022.csv")); //load attributes from csv    
+            promises.push(d3.json("data/townsNY8222024.topojson")); //load chlropleth spatial data 
             promises.push(d3.json("data/US_State_Boundaries.topojson")); //load background data
             promises.push(d3.json("data/Canada.topojson")); //load background data
     
@@ -64,15 +64,16 @@
 
         function callback(data) {
             var csvData = data[0], ny = data[1]; usa = data[2];ca = data[3]
-
+            console.log(ny)
             //place graticule on the map
             setGraticule(map, path);
 
             //translate TopoJSONs
             var usastates = topojson.feature(usa, usa.objects.US_State_Boundaries),
                 canada = topojson.feature(ca, ca.objects.Canada),
-                newyorkWMU = topojson.feature(ny, ny.objects.WMU_NY_WGS84).features;
+                newyorkWMU = topojson.feature(ny, ny.objects.townsNY8222024).features;
             
+        
             //add US States to map
             var states = map.append("path")
                 .datum(usastates)
@@ -127,7 +128,7 @@
         //loop through csv to assign each set of csv attribute values to geojson region
         for (var i=0; i<csvData.length; i++){
             var csvRegion = csvData[i]; //the current region
-            var csvKey = csvRegion.UNIT; //the CSV primary key
+            var csvKey = csvRegion.NAME; //the CSV primary key
 
             //loop through geojson regions to find correct region
             for (var a=0; a<newyorkWMU.length; a++){
@@ -135,7 +136,7 @@
                 var geojsonProps = newyorkWMU[a].properties; //the current region geojson properties
                 //console.log(geojsonProps)
                 
-                var geojsonKey = geojsonProps.UNIT; //the geojson primary key
+                var geojsonKey = geojsonProps.NAME; //the geojson primary key
 
                 //where primary keys match, transfer csv data to geojson properties object
                 if (geojsonKey == csvKey){
@@ -167,7 +168,7 @@
             .enter()
             .append("path")
             .attr("class", function(d){
-                return "regions " + "u" + d.properties.UNIT
+                return "regions " + "u" + d.properties.NAME
             })
             .attr("d", path)
             .style("fill", function(d){
@@ -314,7 +315,7 @@
                 return b[expressed]-a[expressed]
             })
             .attr("class", function(d){
-                return "bar " + "u" + d.UNIT;
+                return "bar " + "u" + d.NAME;
             })
             .attr("width", chartInnerWidth / csvData.length - 1)
             .on("mouseover", function(event, d){
@@ -387,7 +388,7 @@
     
         //at the bottom of updateChart()...add text to chart title
         var chartTitle = d3.select(".chartTitle")
-            .text("Black Bear Harvests: " + expressed);
+            .text("Total Bear Harvests by Method: 2007-2022 " + expressed);
     }; //end of updateChart
 
     //function to highlight enumeration units and bars
@@ -396,7 +397,7 @@
         //change stroke
         //labels werent appearing on both the chart and the map
         /// adding + "u" + fixed it. because the numbers infront in the UNIT field break the css
-        var selected = d3.selectAll("." + "u" + props.UNIT)
+        var selected = d3.selectAll("." + "u" + props.NAME)
             .style("stroke", "brown")
             .style("stroke-width", "2");
         setLabel(props);
@@ -406,7 +407,7 @@
     function dehighlight(props){
         //labels werent appearing on both the chart and the map
         // adding + "u" + fixed it. because the numbers infront in the UNIT field break the css
-        var selected = d3.selectAll("." + "u" + props.UNIT)
+        var selected = d3.selectAll("." + "u" + props.NAME)
         //console.log(selected)
             .style("stroke", function(){
                 return getStyle(this, "stroke")
@@ -438,12 +439,12 @@
         var infolabel = d3.select("body")
             .append("div")
             .attr("class", "infolabel")
-            .attr("id", "u" + props.UNIT + "_label")
+            .attr("id", "u" + props.NAME + "_label")
             .html(labelAttribute);
 
         var wmuLabel = infolabel.append("div")
             .attr("class", "labelname")
-            .html("Wildlife Management Unit (WMU) "+ ": " + props.UNIT);
+            .html("Town "+ ": " + props.NAME);
     };
 
     //function to move info label with mouse

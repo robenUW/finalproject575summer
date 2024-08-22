@@ -7,10 +7,10 @@
 
     //chart frame dimensions
     var chartWidth = (window.innerWidth * .95) ,
-        chartHeight = 500,
+        chartHeight = 475,
         leftPadding = 33,
         rightPadding = 2,
-        topBottomPadding = 4,
+        topBottomPadding = 6,
         chartInnerWidth = chartWidth - leftPadding - rightPadding,
         chartInnerHeight = chartHeight - topBottomPadding * 2,
         translate = "translate(" + leftPadding + "," + topBottomPadding + ")";
@@ -28,7 +28,7 @@
     //set up choropleth map
     function setMap(){
         //map frame dimensions
-        var width = window.innerWidth * .50,
+        var width = window.innerWidth * .95,
             height = window.innerHeight * .50;
     
         //create container div for the map and chart
@@ -47,7 +47,7 @@
             .center([0, 43]) // Centered on the latitude of New York
             .rotate([76, 0]) // Rotated to the longitude of New York; note the sign inversion
             .parallels([41, 44]) // Roughly the latitudinal extent of New York State
-            .scale(3000) // Adjust scale as needed for your visualization
+            .scale(6000) // Adjust scale as needed for your visualization
             .translate([width / 2, height / 2]);
 
         var path = d3.geoPath()
@@ -193,32 +193,42 @@
 
     }
 
-    function makeColorScale(data){
-        var colorClasses = [
-            "#EADDCA",
-            "#E1C16E",
-            "#CD7F32",
-            "#800020",];
-        //create color scale generator
-        var colorScale = d3.scaleQuantile()
-            .range(colorClasses);
+ //function to create color scale generator
+function makeColorScale(data){
+    var colorClasses = [
+        "#EADDCA",
+        "#E1C16E",
+        "#B87333",
+        "#814141",
+        "#8B0000"];
 
-        //build two-value array of minimum and maximum expressed attribute values
-        var minmax = [
-            d3.min(data, function(d) { return parseFloat(d[expressed]); }),
-            d3.max(data, function(d) { return parseFloat(d[expressed]); })
-        ];
+    //create color scale generator
+    var colorScale = d3.scaleThreshold()
+        .range(colorClasses);
 
-        //assign two-value array as scale domain
-        colorScale.domain(minmax);
-
-        console.log(minmax)
-        
-        return colorScale;
+    //build array of all values of the expressed attribute
+    var domainArray = [];
+    for (var i=0; i<data.length; i++){
+        var val = parseFloat(data[i][expressed]);
+        domainArray.push(val);
     };
 
-    //function to create a dropdown menu for attribute selection
-    function createDropdown(csvData){
+    //cluster data using ckmeans clustering algorithm to create natural breaks
+    var clusters = ss.ckmeans(domainArray, 5);
+    //reset domain array to cluster minimums
+    domainArray = clusters.map(function(d){
+        return d3.min(d);
+    });
+    //remove first value from domain array to create class breakpoints
+    domainArray.shift();
+
+    //assign array of last 4 cluster minimums as domain
+    colorScale.domain(domainArray);
+
+    return colorScale;
+};
+     //function to create a dropdown menu for attribute selection
+     function createDropdown(csvData){
         //add select element
         var dropdown = d3.select("body")
             .append("select")
@@ -241,6 +251,14 @@
             .attr("value", function(d){ return d })
             .text(function(d){ return d });
     };
+
+
+
+
+
+
+
+
 
     //dropdown change event handler
     function changeAttribute(attribute, csvData) {
@@ -330,7 +348,7 @@
         
         //create a text element for the chart title
         var chartTitle = chart.append("text")
-            .attr("x", 40)
+            .attr("x", 400)
             .attr("y", 40)
             .attr("class", "chartTitle")
             .text("Estimated Harvests: by Year " + expressed);
@@ -387,7 +405,7 @@
     
         //at the bottom of updateChart()...add text to chart title
         var chartTitle = d3.select(".chartTitle")
-            .text("Harvests: by Year " + expressed);
+            .text("White Tailed Deer Harvests:" + expressed);
     }; //end of updateChart
 
     //function to highlight enumeration units and bars
