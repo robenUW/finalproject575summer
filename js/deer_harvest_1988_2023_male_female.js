@@ -7,7 +7,7 @@
 
     //chart frame dimensions
     var chartWidth = (window.innerWidth * .95) ,
-        chartHeight = 470,
+        chartHeight = 465,
         leftPadding = 47,
         rightPadding = 2,
         topBottomPadding = 6,
