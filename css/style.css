@@ -1,3 +1,20 @@
+body{
+    background-color: #94968b;
+}
+
+.button {
+    background-color: #94968b; /* Green */
+    border: none;
+    color: rgb(93, 77, 77);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 25px;
+
+  }
+
+
 /*Add CSS styles here*/
 .svg-container {
     position: relative;
@@ -55,6 +72,7 @@
     font-family: sans-serif;
     font-size: 1.5em;
     font-weight: bold;
+    fill: rgb(93, 77, 77);;
 }
 
 .chartBackground {
@@ -63,7 +81,7 @@
 
 .chartFrame {
     fill: none;
-    stroke: #999;
+    stroke: rgb(93, 77, 77);;
     stroke-width: px;
     shape-rendering: crispEdges;
 }
@@ -71,20 +89,21 @@
 .axis path,
 .axis line {
     fill: none;
-    stroke: #999;
+    stroke:rgb(93, 77, 77);
     stroke-width: 1px;
     shape-rendering: crispEdges;
 }
 
 .axis text {
     font-family: sans-serif;
-    font-size: 1.0em;
-    fill: #999;
+    font-size: 1.5em;
+    fill: rgb(93, 77, 77);
 }
 
 
 .dropdown {
     position: absolute;
+    color: rgb(199, 171, 171);
     top: 60px;
     left: 25.5px;
     z-index: 10;
@@ -92,8 +111,9 @@
     font-size: 1em;
     font-weight: bold;
     padding: 2px;
-    border: 1px solid #999;
-    box-shadow: 2px 2px 4px #999;
+    border: 1px solid rgb(93, 77, 77);;
+    box-shadow: 2px 2px 4px rgb(93, 77, 77);;
+    background-color: rgb(93, 77, 77);
 }
 
 option {
@@ -111,8 +131,8 @@ option {
     position: absolute;
     height: 50px;
     min-width: 100px;
-    color: #fff;
-    background-color: #000;
+    color: rgb(93, 77, 77);;
+    background-color: #ddd8d8;
     border: solid thin #fff;
     padding: 5px 10px;
 }
@@ -124,17 +144,7 @@ option {
     line-height: 1em;
 }
 
-.button {
-    background-color: #94968b; /* Green */
-    border: none;
-    color: rgb(93, 77, 77);
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    position: center;
-  }
+
 
   #map {    
     height: 1000px;    
