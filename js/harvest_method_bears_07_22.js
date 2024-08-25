@@ -1,15 +1,17 @@
 //First line of main.js...wrap everything in a self-executing anonymous function to move to local scope
+
 (function(){
 
     var attrArray = ["Bow 2007","Early 2007","Muzzleloader 2007","Rifle 2007","2007 Total","Bow 2008","Early 2008","Muzzleloader 2008","Rifle 2008","2008 Total","Bow 2009","Early 2009","Muzzleloader 2009","Rifle 2009","Unknown 2009","2009 Total","Bow 2010","Early 2010","Muzzleloader 2010","Rifle 2010","2010 Total","Bow 2011","Early 2011","Muzzleloader 2011","Rifle 2011","2011 Total","Bow 2012","Early 2012","Muzzleloader 2012","Rifle 2012","2012 Total","Bow 2013","Early 2013","Muzzleloader 2013","Rifle 2013","2013 Total","Bow 2014","Early 2014","Muzzleloader 2014","Rifle 2014","2014 Total","Bow 2015","Early 2015","Muzzleloader 2015","Rifle 2015","2015 Total","Bow 2016","Early 2016","Muzzleloader 2016","Rifle 2016","Unknown 2016","2016 Total","Bow 2017","Early 2017","Muzzleloader 2017","Rifle 2017","Unknown 2017","2017 Total","Bow 2018","Early 2018","Muzzleloader 2018","Rifle 2018","Unknown 2018","2018 Total","Bow 2019","Early 2019","Muzzleloader 2019","Rifle 2019","Unknown 2019","2019 Total","Bow 2020","Early 2020","Muzzleloader 2020","Rifle 2020","Unknown 2020","2020 Total","Bow 2021","Early 2021","Muzzleloader 2021","Rifle 2021","Unknown 2021","2021 Total","Bow 2022","Early 2022","Muzzleloader 2022","Rifle 2022","Unknown 2022","Grand Total"]
     var expressed = attrArray[0]; //initial attribute
 
+
     //chart frame dimensions
     var chartWidth = (window.innerWidth * .95) ,
-        chartHeight = 475,
+        chartHeight = 450,
         leftPadding = 34,
         rightPadding = 2,
-        topBottomPadding = 4,
+        topBottomPadding = 6,
         chartInnerWidth = chartWidth - leftPadding - rightPadding,
         chartInnerHeight = chartHeight - topBottomPadding * 2,
         translate = "translate(" + leftPadding + "," + topBottomPadding + ")";
@@ -272,7 +274,7 @@
             })
             .transition() //add animation
             .delay(function(d, i){
-                return i * 20
+                return i * 5
             })
             .duration(500);
         
@@ -471,4 +473,15 @@
             .style("top", y + "px");
 };
 
+    var map
+
+    //Leaflet plugin to add a styled sidepanel
+    const sidepanelLeft = L.control.sidepanel('mySidepanelLeft', {
+        tabsPosition: 'left',
+        startTab: 'tab-2'
+    }).addTo(map);
+
+
+
 })(); //last line of main.js
+

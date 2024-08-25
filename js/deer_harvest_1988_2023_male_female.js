@@ -8,7 +8,7 @@
     //chart frame dimensions
     var chartWidth = (window.innerWidth * .95) ,
         chartHeight = 470,
-        leftPadding = 33,
+        leftPadding = 47,
         rightPadding = 2,
         topBottomPadding = 6,
         chartInnerWidth = chartWidth - leftPadding - rightPadding,
@@ -487,5 +487,14 @@ function makeColorScale(data){
             .style("left", x + "px")
             .style("top", y + "px");
 };
+
+var map
+
+//Leaflet plugin to add a styled sidepanel
+const sidepanelLeft = L.control.sidepanel('mySidepanelLeft', {
+    tabsPosition: 'left',
+    startTab: 'tab-2'
+}).addTo(map);
+
 
 })(); //last line of main.js

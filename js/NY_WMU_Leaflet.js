@@ -1,5 +1,3 @@
-/* Example from Leaflet Quick Start Guide*/
-
 var map;
 
 function createMap(){
@@ -16,15 +14,14 @@ function createMap(){
 
     //call getData function
     getData();
-    
 
 };
 
-//Step 3: Add circle markers for point features to the map
+//adds popup for WMU symbol
 function createPropSymbols(data){
         var unitlayer = L.geoJson(data, {
         onEachFeature: function (feature, layer) {
-            console.log(feature.properties);
+            //console.log(feature.properties);
             content = feature.properties.UNIT 
             layer.bindTooltip(content);
         }
@@ -36,10 +33,6 @@ function createPropSymbols(data){
     tabsPosition: 'left',
     startTab: 'tab-1'
 }).addTo(map);
-
-
-
-
 
 //function to retrieve the data and place it on the map
 function getData(){

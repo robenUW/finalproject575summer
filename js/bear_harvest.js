@@ -6,10 +6,10 @@
 
     //chart frame dimensions
     var chartWidth = (window.innerWidth * .95) ,
-        chartHeight = 425,
+        chartHeight = 450,
         leftPadding = 33,
         rightPadding = 2,
-        topBottomPadding = 4,
+        topBottomPadding = 6,
         chartInnerWidth = chartWidth - leftPadding - rightPadding,
         chartInnerHeight = chartHeight - topBottomPadding * 2,
         translate = "translate(" + leftPadding + "," + topBottomPadding + ")";
@@ -469,5 +469,15 @@
             .style("left", x + "px")
             .style("top", y + "px");
 };
+
+
+var map
+
+//Leaflet plugin to add a styled sidepanel
+const sidepanelLeft = L.control.sidepanel('mySidepanelLeft', {
+    tabsPosition: 'left',
+    startTab: 'tab-2',
+}).addTo(map);
+
 
 })(); //last line of main.js

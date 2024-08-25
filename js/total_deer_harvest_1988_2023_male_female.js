@@ -8,7 +8,7 @@
     //chart frame dimensions
     var chartWidth = (window.innerWidth * .95) ,
         chartHeight = 470,
-        leftPadding = 45,
+        leftPadding = 65,
         rightPadding = 2,
         topBottomPadding = 6,
         chartInnerWidth = chartWidth - leftPadding - rightPadding,
@@ -19,7 +19,7 @@
     //create a scale to size bars proportionally to frame and for axis
     var yScale = d3.scaleLinear()
         .range([463, 0])
-        .domain([20000, 135000]);
+        .domain([10000, 135000]);
 
 
     //begin script when window loads
@@ -487,5 +487,16 @@ function makeColorScale(data){
             .style("left", x + "px")
             .style("top", y + "px");
 };
+
+var map
+
+//Leaflet plugin to add a styled sidepanel
+const sidepanelLeft = L.control.sidepanel('mySidepanelLeft', {
+    tabsPosition: 'left',
+    startTab: 'tab-2'
+}).addTo(map);
+
+
+
 
 })(); //last line of main.js
